@@ -29,7 +29,7 @@ public class Adventure
         {
             System.out.print("> ");
             String input = adv.inputScanner.nextLine();
-            adv.cmds = input.split(" +");
+            adv.cmds = input.trim().split(" +");
 
             // Switch statement to process commands from the user
             switch (adv.cmds[0].substring(0,1).toLowerCase())
@@ -100,21 +100,21 @@ public class Adventure
     }
 
     // private methods to be used by go
-    private boolean movedAllowed(int ns, int ew)
+    private boolean moveAllowed(int ns, int ew)
     {
         if(ns != NO_CHANGE)
         {
-            return( (northSouth + ns) > MAX_ROW || (northSouth + ns) < MIN_ROW );
+            return( (northSouth + ns) <= MAX_ROW && (northSouth + ns) >= MIN_ROW );
         }
         else
         {
-            return ( (eastWest + ew) > MAX_ROW || (eastWest + ew) < MIN_ROW );
+            return ( (eastWest + ew) <= MAX_ROW && (eastWest + ew) >= MIN_ROW );
         }
     }
 
     private void makeMove(int ns, int ew, String direction)
     {
-        if(movedAllowed(ns,ew))
+        if(moveAllowed(ns,ew))
         {
             System.out.println("Moving "+direction+"...");
             northSouth += ns;
