@@ -5,6 +5,7 @@
  * A class that represents a simple text adventure game.
  */
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Adventure
@@ -31,12 +32,27 @@ public class Adventure
             String input = adv.inputScanner.nextLine();
             adv.cmds = input.trim().split(" +");
 
+            if(adv.cmds[0].length() < 1)
+            {
+                adv.cmds[0] = adv.cmds[0] + " ";
+            }
+
             // Switch statement to process commands from the user
             switch (adv.cmds[0].substring(0,1).toLowerCase())
             {
                 case "g":
+                    if(adv.cmds.length == 1)
+                    {
+                        adv.cmds = Arrays.copyOf(adv.cmds, 2);
+                        adv.cmds[1] = " ";
+                    }
 
-                    adv.go(adv.cmds[1].substring(0,1).toLowerCase());
+                    if(adv.cmds[1].length() < 1)
+                    {
+                        adv.cmds[1] = adv.cmds[1] + " ";
+                    }
+
+                    adv.go(adv.cmds[1].substring(0, 1).toLowerCase());
                     break;
 
                 case "i":
@@ -60,7 +76,7 @@ public class Adventure
     // go method
     public void go(String direction)
     {
-        switch(direction.substring(0,1).toLowerCase())
+        switch(direction)
         {
             case "n":
                 makeMove(NORTH,NO_CHANGE,"north");
